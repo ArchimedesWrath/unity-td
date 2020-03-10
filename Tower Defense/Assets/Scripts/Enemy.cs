@@ -28,6 +28,9 @@ public class Enemy : MonoBehaviour
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         isAlive = true;
+
+        // TODO: Change this eventually
+        health = 10;
     }
 
     void FixedUpdate()
@@ -72,8 +75,29 @@ public class Enemy : MonoBehaviour
         SetNextWayPoint();
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    // TODO: This can be modified to take data during damage event to add status to enemy.
+    public void DamageEnemy(int damage)
     {
-        Debug.Log(col);
+        health -= damage;
+        CheckHealth();
+    }
+
+    private void CheckHealth()
+    {
+        if (health <= 0)
+        {
+            KillEnemy();
+        }
+    }
+
+    public void KillEnemy()
+    {
+        if (isAlive)
+        {
+            isAlive = false;
+            WaveManager.Instance.RemoveEnemey(gameObject);
+            Destroy(gameObject);
+        }
+        
     }
 }
