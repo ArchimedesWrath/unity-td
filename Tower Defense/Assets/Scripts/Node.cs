@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class Node : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject tower = null;
+
+    public bool PlaceTower(GameObject Tower)
     {
-        
+        if (tower) 
+        {
+            return false;
+        }
+        else {
+            tower = Tower;
+            return true;
+        } 
     }
 
-    // Update is called once per frame
-    void Update()
+    public bool RemoveTower()
     {
-        
+        if (tower)
+        {
+            tower = null;
+            return true;
+        } else {
+            return false;
+        }
     }
 }
