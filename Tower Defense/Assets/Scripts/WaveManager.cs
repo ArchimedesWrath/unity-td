@@ -53,7 +53,7 @@ public class WaveManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetKeyDown(KeyCode.S))
         {
 
             if (!isSpawning)
@@ -77,6 +77,7 @@ public class WaveManager : MonoBehaviour
         for (int i = 0; i < 15; i ++)
         {
             GameObject enemy =  SpawnEnemy(EnemyPrefab, StartPortal.transform);
+            enemy.transform.SetParent(transform, true);
             AddEnemy(enemy);
 
             yield return new WaitForSeconds(1f / 2f);

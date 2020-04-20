@@ -18,6 +18,12 @@ public class Node : MonoBehaviour
         } 
     }
 
+    public bool HasTower()
+    {
+        if (tower) return true;
+        else return false;
+    }
+
     public bool RemoveTower()
     {
         if (tower)
