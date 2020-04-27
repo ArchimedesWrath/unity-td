@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// The WaveManager class probably has too much functionality as it stands.
+// It is responsible for starting the wave, spawning enemies, Updating UI, removing lives,
+// and ending the game. 
+// I will need to decouple this in the future. 
 public class WaveManager : MonoBehaviour
 {
 
@@ -20,17 +24,20 @@ public class WaveManager : MonoBehaviour
     [SerializeField]
     private GameObject EndPortal = null;
 
+    [SerializeField]
+    private int enemyCount = 15;
+    private int enemiesLeft = 0;
+    [SerializeField]
+    private int lives = 20; // THIS WILL EVENTUALLY CHANGE I CAN WRITE GOOD CODE I SWEAR
 
     // Spawning Variables
     public bool isSpawning = false;
+    private int wave = 0;
 
     private static WaveManager _instance;
 
     public static WaveManager Instance { get { return _instance; } }
 
-    /// <summary>
-    /// Awake is called when the script instance is being loaded.
-    /// </summary>
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -41,10 +48,6 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Start is called on the frame when a script is enabled just before
-    /// any of the Update methods is called the first time.
-    /// </summary>
     private void Start()
     {
         wayPoints.AddRange(GameObject.FindGameObjectsWithTag("Waypoint"));
@@ -53,7 +56,7 @@ public class WaveManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
 
             if (!isSpawning)
@@ -73,8 +76,15 @@ public class WaveManager : MonoBehaviour
 
     private IEnumerator SpawnWave()
     {
+        wave++;
+        enemyCount = 15;
+        enemiesLeft = enemyCount;
         isSpawning = true;
-        for (int i = 0; i < 15; i ++)
+
+        // Should set the UI here?
+        UIManager.Instance.UpdateGameUI(enemiesLeft, wave, lives);
+
+        for (int i = 0; i < enemyCount; i ++)
         {
             GameObject enemy =  SpawnEnemy(EnemyPrefab, StartPortal.transform);
             enemy.transform.SetParent(transform, true);
@@ -82,7 +92,7 @@ public class WaveManager : MonoBehaviour
 
             yield return new WaitForSeconds(1f / 2f);
         }
-
+ 
         isSpawning = false;
     }
 
@@ -94,6 +104,14 @@ public class WaveManager : MonoBehaviour
     public void RemoveEnemey(GameObject enemy)
     {
         enemies.Remove(enemy);
+        enemiesLeft--; // I think not a great way to solve this problem...
+        UIManager.Instance.UpdateGameUI(enemiesLeft, wave, lives);
+    }
+
+    public void TakeLife()
+    {
+        lives--;
+        UIManager.Instance.UpdateGameUI(enemiesLeft, wave, lives);
     }
 
 }

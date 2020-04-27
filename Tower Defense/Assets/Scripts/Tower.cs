@@ -7,35 +7,31 @@ public class Tower : MonoBehaviour
 {
 
     // Variables for drawing circle to act as range indicator:
-    public int Segments = 50;
-    public float lineWidth = 0.04f;
-    public LineRenderer lineRenderer;
+    private int Segments = 50;
+    private float lineWidth = 0.04f;
+    private LineRenderer lineRenderer;
 
     // Base Tower Variables
     public GameObject projectilePrefab = null; // This does not need to exist for every tower (think AoE towers). 
     public GameObject CurrentTarget = null;
     
-    [SerializeField]
-    private float AttackSpeed = 1f;
     private float AttackCountdown = 0f;
     [SerializeField]
     private float AttackRange = 4f;
-    [SerializeField]
-    private int AttackDamage = 5;
+    public int AttackDamage = 5;
+    public float AttackSpeed = 1f;
+    public int level = 1;
+    public int exp = 0;
+    public int expNextLevel = 10;
+    public string Name = "Blue Tower";
 
     private void Awake() 
     {
         lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.SetVertexCount(Segments + 1);
+        lineRenderer.positionCount = Segments + 1;
         lineRenderer.widthMultiplier = lineWidth;
         lineRenderer.useWorldSpace = false;
-        //SetupRange(); 
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        // SetupRange(); 
     }
 
     // Update is called once per frame
@@ -112,6 +108,23 @@ public class Tower : MonoBehaviour
 
             lineRenderer.SetPosition(i, new Vector3(x, y, z));
             angle += (360f / Segments);
+        }
+    }
+
+    public void AddExp(int expToAdd)
+    {
+        // Think about adding this in a loop
+        exp += expToAdd;
+
+    }
+
+    private void CheckExp()
+    {
+        if (exp >= expNextLevel)
+        {
+            level++;
+            exp = exp - expNextLevel;
+            expNextLevel = level * expNextLevel;
         }
     }
 

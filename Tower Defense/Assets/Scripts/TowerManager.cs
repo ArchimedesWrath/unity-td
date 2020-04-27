@@ -10,10 +10,6 @@ public class TowerManager : MonoBehaviour {
     public GameObject currentNode = null;
     public GameObject towerPrefab = null;
 
-    /// <summary>
-    /// Start is called on the frame when a script is enabled just before
-    /// any of the Update methods is called the first time.
-    /// </summary>
     private void Start()
     {
         GameObject[] nodes = GameObject.FindGameObjectsWithTag("Node");
@@ -35,6 +31,12 @@ public class TowerManager : MonoBehaviour {
         {
             // Place a tower
             PlaceTower(towerPrefab, currentNode);
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            // Sell tower
+            RemoveTower(currentNode);
         }
     }
 
@@ -74,9 +76,32 @@ public class TowerManager : MonoBehaviour {
             // Set new tower as a child of the TowerManager GO for organization.
             newTower.transform.SetParent(transform, true);
 
-        }
+            UIManager.Instance.ToggleTowerStatsUI();
 
-        
+        }
+    }
+
+    // Takes a noded and removes the tower from that node.
+    private void RemoveTower(GameObject node)
+    {
+        if (Nodes[node].HasTower())
+        {
+            // Remove the tower
+            // Remove tower from node
+            Nodes[node].RemoveTower();
+            // Delete tower from game || In the future this will be a different mechanic.
+            // Do I have the node delete this tower??
+            Destroy(Towers[Nodes[node]]);
+            // Remove tower from dict
+            Towers.Remove(Nodes[node]);
+
+            UIManager.Instance.ToggleEnemyStatsUI();
+
+        } 
+        else 
+        {
+            Debug.Log("There is no tower on this node!");
+        }
     }
 
     /*
