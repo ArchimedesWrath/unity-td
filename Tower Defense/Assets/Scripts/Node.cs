@@ -6,6 +6,8 @@ public class Node : MonoBehaviour
 {
     public GameObject tower = null;
 
+    public string Type;
+
     public bool PlaceTower(GameObject Tower)
     {
         if (tower) 

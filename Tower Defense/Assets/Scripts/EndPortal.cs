@@ -13,7 +13,7 @@ public class EndPortal : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            WaveManager.Instance.enemies[other.gameObject].DamageEnemy(10);
+            WaveManager.Instance.enemies[other.gameObject].DamageEnemy(10, null);
             WaveManager.Instance.TakeLife();  
         }
     }

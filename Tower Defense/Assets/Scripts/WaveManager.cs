@@ -82,7 +82,7 @@ public class WaveManager : MonoBehaviour
         isSpawning = true;
 
         // Should set the UI here?
-        UIManager.Instance.UpdateGameUI(enemiesLeft, wave, lives);
+        UIManager.Instance.UpdateGameStatsUI(enemiesLeft, wave, lives);
 
         for (int i = 0; i < enemyCount; i ++)
         {
@@ -105,13 +105,13 @@ public class WaveManager : MonoBehaviour
     {
         enemies.Remove(enemy);
         enemiesLeft--; // I think not a great way to solve this problem...
-        UIManager.Instance.UpdateGameUI(enemiesLeft, wave, lives);
+        UIManager.Instance.UpdateGameStatsUI(enemiesLeft, wave, lives);
     }
 
     public void TakeLife()
     {
         lives--;
-        UIManager.Instance.UpdateGameUI(enemiesLeft, wave, lives);
+        UIManager.Instance.UpdateGameStatsUI(enemiesLeft, wave, lives);
     }
 
 }

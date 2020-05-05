@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
+  Type: Grass
 --- !u!61 &-7567400153447325136
 BoxCollider2D:
   m_ObjectHideFlags: 0

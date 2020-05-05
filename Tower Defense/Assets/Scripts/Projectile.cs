@@ -13,10 +13,7 @@ public class Projectile : MonoBehaviour
     private GameObject target = null;
     private float speed = 10f;
     private int projectileDamage = 0;
-
-    /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// </summary>
+    private Tower tower;
     private void FixedUpdate()
     {
         if (target)
@@ -47,22 +44,29 @@ public class Projectile : MonoBehaviour
         else 
         {
             // Destroy game object and apply damage.
-            DamageTarget();
+            if (target) DamageTarget();
+            else Destroy(gameObject);
         }
     }
 
     private void DamageTarget()
     {
         // Do we want to check that the projectile damage is a non null value?
-        WaveManager.Instance.enemies[target].DamageEnemy(projectileDamage);
+        // I also believe that this is causing an error to occur where a projectile tries to damage an enemy that doesn't exist.
+        // Here is the fix for that:
+        if (WaveManager.Instance.enemies.ContainsKey(target))
+        {
+            WaveManager.Instance.enemies[target].DamageEnemy(projectileDamage, tower);
+        }
         Destroy(gameObject);
         // TODO: Add destruction particles here.
     }    
 
-    public void SetupProjectile(GameObject Target, int damage)
+    public void SetupProjectile(GameObject Target, int damage, Tower originTower)
     {
         target = Target;
         projectileDamage = damage;
+        tower = originTower;
     }
 
 }

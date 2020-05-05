@@ -95,15 +95,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d0ffb6445c405440bc82c4a649bd12f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Segments: 40
-  lineWidth: 0.2
-  lineRenderer: {fileID: 0}
   projectilePrefab: {fileID: 71721274311472458, guid: 3ca2e825a06372848a873d2486794c83,
     type: 3}
   CurrentTarget: {fileID: 0}
-  AttackSpeed: 3
   AttackRange: 3
-  AttackDamage: 5
+  AttackDamage: 1
+  AttackSpeed: 3
+  Level: 1
+  exp: 0
+  expNextLevel: 10
+  Name: Blue Tower
 --- !u!120 &3085713353284271226
 LineRenderer:
   m_ObjectHideFlags: 0

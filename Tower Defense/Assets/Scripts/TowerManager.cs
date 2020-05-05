@@ -6,9 +6,20 @@ public class TowerManager : MonoBehaviour {
     
     public Dictionary<Node, GameObject> Towers = new Dictionary<Node, GameObject>();
     public Dictionary<GameObject, Node> Nodes = new Dictionary<GameObject, Node>();
-
-    public GameObject currentNode = null;
     public GameObject towerPrefab = null;
+
+    private static TowerManager _instnace;
+    public static TowerManager Instance { get { return _instnace; } }
+
+    private void Awake() 
+    {
+        if (_instnace != null && _instnace != this)
+        {
+            Destroy(gameObject);
+        } else {
+            _instnace = this;
+        }
+    }
 
     private void Start()
     {
@@ -19,51 +30,27 @@ public class TowerManager : MonoBehaviour {
             Nodes.Add(node, node.GetComponent<Node>());
         }
     }
-        
-    private void Update() 
+
+    public Node GetNode(GameObject node)
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            checkNode();
-        }
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            // Place a tower
-            PlaceTower(towerPrefab, currentNode);
-        }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            // Sell tower
-            RemoveTower(currentNode);
-        }
+        return Nodes[node];
     }
 
-    private void checkNode()
+    public GameObject GetTower(GameObject node)
     {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
-
-        RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
-        if(hit.collider != null)
-        {
-            if (hit.collider.gameObject.CompareTag("Node"))
-            {
-                currentNode = hit.collider.gameObject;
-            }
-        }
+        return Towers[GetNode(node)];
     }
 
     // Function first checks to see if ndoe has a tower on it. 
     // If no tower is on  then it should check the player's money and decide if a tower should be built.
     // TODO: Either rename this function or Node.PlaceTower to prevent ambiguous names.
-    private void PlaceTower(GameObject tower, GameObject node)
+    public bool PlaceTower(GameObject tower, GameObject node)
     {
         if (Nodes[node].HasTower())
         {
             // Then the node already has a tower and cannot place another one.
             Debug.Log("This node already has a tower!");
+            return false;
         } else 
         {
             // If not then place a tower using the Node.PlaceTower() function.
@@ -76,13 +63,13 @@ public class TowerManager : MonoBehaviour {
             // Set new tower as a child of the TowerManager GO for organization.
             newTower.transform.SetParent(transform, true);
 
-            UIManager.Instance.ToggleTowerStatsUI();
+            return true;
 
         }
     }
 
     // Takes a noded and removes the tower from that node.
-    private void RemoveTower(GameObject node)
+    public bool RemoveTower(GameObject node)
     {
         if (Nodes[node].HasTower())
         {
@@ -95,12 +82,13 @@ public class TowerManager : MonoBehaviour {
             // Remove tower from dict
             Towers.Remove(Nodes[node]);
 
-            UIManager.Instance.ToggleEnemyStatsUI();
+            return true;
 
         } 
         else 
         {
             Debug.Log("There is no tower on this node!");
+            return false;
         }
     }
 

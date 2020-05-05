@@ -20,7 +20,7 @@ public class Tower : MonoBehaviour
     private float AttackRange = 4f;
     public int AttackDamage = 5;
     public float AttackSpeed = 1f;
-    public int level = 1;
+    public int Level = 1;
     public int exp = 0;
     public int expNextLevel = 10;
     public string Name = "Blue Tower";
@@ -86,7 +86,7 @@ public class Tower : MonoBehaviour
     private void SpawnProjectile()
     {
         GameObject projectile = Instantiate(projectilePrefab, transform);
-        projectile.GetComponent<Projectile>().SetupProjectile(CurrentTarget, AttackDamage);
+        projectile.GetComponent<Projectile>().SetupProjectile(CurrentTarget, AttackDamage, this);
     }
 
     // TODO: Have each tower draw it's own range indicator? Or have that done by some helper class?
@@ -113,18 +113,24 @@ public class Tower : MonoBehaviour
 
     public void AddExp(int expToAdd)
     {
-        // Think about adding this in a loop
+        // Think about adding this in a loop,
+        // If there are massive XP dumps then it may skip levels incorrectly. 
         exp += expToAdd;
 
+        if (TowerManager.Instance.GetTower(UIManager.Instance.CurrentNode) == this.gameObject) UIManager.Instance.UpdateTowerExpUI(this);
+        
+
+        CheckExp();
     }
 
     private void CheckExp()
     {
         if (exp >= expNextLevel)
         {
-            level++;
+            Level++;
             exp = exp - expNextLevel;
-            expNextLevel = level * expNextLevel;
+            expNextLevel = Level * expNextLevel;
+            if (TowerManager.Instance.GetTower(UIManager.Instance.CurrentNode) == this.gameObject) UIManager.Instance.UpdateTowerExpUI(this);
         }
     }
 
@@ -134,4 +140,3 @@ public class Tower : MonoBehaviour
     //     Gizmos.DrawSphere(transform.position, AttackRange);    
     // }
 }
-

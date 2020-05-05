@@ -13,11 +13,15 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private int currentWaypointIndex;
 
-    [SerializeField]
-    private int health;
+    public int Level = 1;
+    
+    public int Health;
+    public int MaxHealth;
+    public string Name = "Sheep";
+    public string Type = "Animal";
 
     [SerializeField]
-    private bool isAlive = false;
+    public bool isAlive = false;
 
 
     private Rigidbody2D rb = null;
@@ -30,7 +34,8 @@ public class Enemy : MonoBehaviour
         isAlive = true;
 
         // TODO: Change this eventually
-        health = 10;
+        Health = 10;
+        MaxHealth = Health;
     }
 
     void FixedUpdate()
@@ -45,6 +50,8 @@ public class Enemy : MonoBehaviour
         if (dist > 0.1f) transform.Translate(new Vector3(speed * Time.deltaTime, 0, 0));
         
         if (dist <= 0.1f) SetNextWayPoint();
+
+        if (!isAlive) KillEnemy(null);
     }
 
     void SetNextWayPoint()
@@ -77,25 +84,36 @@ public class Enemy : MonoBehaviour
     }
 
     // TODO: This can be modified to take data during damage event to add status to enemy.
-    public void DamageEnemy(int damage)
+    public void DamageEnemy(int damage, Tower tower)
     {
-        health -= damage;
-        CheckHealth();
+        Health -= damage;
+        if (UIManager.Instance.CurrentEnemy == this.gameObject) UIManager.Instance.UpdateEnemyHealthUI(this);
+
+        if (Health <= 0) KillEnemy(tower);
     }
 
-    private void CheckHealth()
-    {
-        if (health <= 0)
-        {
-            KillEnemy();
-        }
-    }
-
-    public void KillEnemy()
+    public void KillEnemy(Tower tower)
     {
         if (isAlive)
         {
             isAlive = false;
+            
+            if (UIManager.Instance.CurrentEnemy == this.gameObject) UIManager.Instance.ToggleStatsUIOff();
+
+            // If the enemy was killed by a tower award xp to that tower.
+            // Need to account for when a projectile is still in the air but we delete the tower before collision. MIGHT want to handle this on projecile side...
+            if (tower)
+            {
+                tower.AddExp( (Level * 2) + 1 );
+            }
+
+            WaveManager.Instance.RemoveEnemey(gameObject);
+            Destroy(gameObject);
+
+        } else if (!isAlive)
+        {
+            // Something went wrong...
+            Debug.Log($"{this.gameObject.name} has to be destroyed.");
             WaveManager.Instance.RemoveEnemey(gameObject);
             Destroy(gameObject);
         }
