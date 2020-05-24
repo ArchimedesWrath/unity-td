@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node : MonoBehaviour
+public class GrassTile : Tile
 {
+    // Grass tiles can have towers placed on them.
     public GameObject tower = null;
-
-    public string Type;
 
     public bool PlaceTower(GameObject Tower)
     {
@@ -19,7 +18,7 @@ public class Node : MonoBehaviour
             return true;
         } 
     }
-
+    
     public bool HasTower()
     {
         if (tower) return true;

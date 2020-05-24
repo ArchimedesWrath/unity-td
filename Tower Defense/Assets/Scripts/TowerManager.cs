@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class TowerManager : MonoBehaviour {
     
-    public Dictionary<Node, GameObject> Towers = new Dictionary<Node, GameObject>();
-    public Dictionary<GameObject, Node> Nodes = new Dictionary<GameObject, Node>();
+    public Dictionary<GrassTile, GameObject> Towers = new Dictionary<GrassTile, GameObject>();
+    public Dictionary<GameObject, GrassTile> Nodes = new Dictionary<GameObject, GrassTile>();
     public GameObject towerPrefab = null;
 
     private static TowerManager _instnace;
@@ -27,11 +27,11 @@ public class TowerManager : MonoBehaviour {
         
         foreach(GameObject node in nodes)
         {
-            Nodes.Add(node, node.GetComponent<Node>());
+            Nodes.Add(node, node.GetComponent<GrassTile>());
         }
     }
 
-    public Node GetNode(GameObject node)
+    public GrassTile GetNode(GameObject node)
     {
         return Nodes[node];
     }
@@ -56,7 +56,7 @@ public class TowerManager : MonoBehaviour {
             // If not then place a tower using the Node.PlaceTower() function.
             GameObject newTower = (GameObject)Instantiate(tower, node.transform);
             // Add tower and associated node to Towers Dict
-            Node nodeScript = Nodes[node];
+            GrassTile nodeScript = Nodes[node];
             nodeScript.PlaceTower(newTower);
             Towers.Add(nodeScript, newTower);
 
