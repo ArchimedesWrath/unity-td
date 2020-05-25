@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5755125688134110567}
   - component: {fileID: 4145546253403450196}
-  - component: {fileID: 6906458461463131726}
+  - component: {fileID: 8330623791108648762}
   m_Layer: 0
   m_Name: grass_clover_2
   m_TagString: Untagged
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6906458461463131726
+--- !u!114 &8330623791108648762
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3605589568496597110}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ab1c086f782874408228f22270ef90b, type: 3}
+  m_Script: {fileID: 11500000, guid: d1e33269db58c71449ba2450ba5a895d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 

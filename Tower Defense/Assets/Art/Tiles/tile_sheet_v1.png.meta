@@ -71,6 +71,9 @@ TextureImporter:
   - first:
       213: 3392841457686156854
     second: tile_sheet_v1_31
+  - first:
+      213: 6447431470060283796
+    second: tile_highlight
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -591,6 +594,27 @@ TextureImporter:
       bones: []
       spriteID: 7a39caec32adc224ca4da848f9a1d6e0
       internalID: -8316792461377825566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_highlight
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 384
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6e2931375a41d043a7b07451c8e5a2f
+      internalID: 6447431470060283796
       vertices: []
       indices: 
       edges: []

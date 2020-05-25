@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7968454239098280054}
   - component: {fileID: 7244225855118225465}
-  - component: {fileID: 2750610407995823779}
+  - component: {fileID: -1319345678575032824}
   m_Layer: 0
   m_Name: grass_ferns
   m_TagString: Untagged
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2750610407995823779
+--- !u!114 &-1319345678575032824
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7259057547463387987}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ab1c086f782874408228f22270ef90b, type: 3}
+  m_Script: {fileID: 11500000, guid: d1e33269db58c71449ba2450ba5a895d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 

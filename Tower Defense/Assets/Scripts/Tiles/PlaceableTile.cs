@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrassTile : Tile
+public class PlaceableTile : Tile
 {
     // Grass tiles can have towers placed on them.
     public GameObject tower = null;
